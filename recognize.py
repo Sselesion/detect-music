@@ -15,6 +15,11 @@ class Track(NamedTuple):
     artist: str = "Unknown artist"
 
 
+class Dirs(Enum):
+    IN = os.path.join('.', "in")
+    OUT = os.path.join('.', "out")
+
+
 def fmt_track(recognized_track: Track) -> str:
     return f"{recognized_track.title} — {recognized_track.artist}"
 
@@ -66,28 +71,33 @@ def detect(dir_from: str, dir_to: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description=f"A program for recognizing track titles using Shazam."
-    )
+    print(Dirs.IN.value, Dirs.OUT.value)
+    # parser = argparse.ArgumentParser(
+    #     description=f"A program for recognizing track titles using Shazam."
+    # )
 
-    parser.add_argument(
-        "path_from",
-        metavar="PATH_FROM",
-        type=str,
-        nargs=1,
-        help="directory where tracks is located.",
-    )
-    parser.add_argument(
-        "path_to",
-        metavar="PATH_TO",
-        type=str,
-        nargs=1,
-        help="directory where the recognized tracks will be placed.",
-    )
-    args = parser.parse_args()
+    # parser.add_argument(
+    #     "path_from",
+    #     metavar="PATH_FROM",
+    #     type=str,
+    #     nargs='?',
+    #     default=Dirs.IN.value,
+    #     help="directory where tracks is located.",
+    # )
+    # parser.add_argument(
+    #     "path_to",
+    #     metavar="PATH_TO",
+    #     type=str,
+    #     nargs='?',
+    #     default=Dirs.OUT.value,
+    #     help="directory where the recognized tracks will be placed.",
+    # )
+    # args = parser.parse_args()
 
-    if os.path.exists(args.path_from[0]) and os.path.exists(args.path_to[0]):
-        detect(args.path_from[0], args.path_to[0])
+    # print(args.path_from, args.path_to)
+    
+    if os.path.exists(Dirs.IN.value) and os.path.exists(Dirs.OUT.value):
+        detect(Dirs.IN.value, Dirs.OUT.value)
     else:
         print("The directory(s) you specified do not exist.")
 
